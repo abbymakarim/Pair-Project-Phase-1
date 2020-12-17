@@ -16,8 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         through : models.BookUser,
         foreignKey : "user_id"
       })
-
-      // define association here
     }
   };
   User.init({

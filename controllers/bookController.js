@@ -1,4 +1,4 @@
-const { Book, BookUser } = require('../models');
+const { Book, BookUser, User } = require('../models');
 
 class BookController {
 
@@ -50,6 +50,21 @@ class BookController {
           .catch(err => {
               res.send(err)
           })
+    }
+
+    static bookBorrowed (req, res){
+        let id = req.session.userId
+        User.findAll({
+            include : Book,
+            where : {id : id}
+        })
+        .then(data => {
+            res.render ('bookBorrowed', {data})
+            
+        })
+        .catch(err => {
+            res.send(err)
+        })
     }
 
 } 

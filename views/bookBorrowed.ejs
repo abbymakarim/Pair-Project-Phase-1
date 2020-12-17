@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student-List</title>
+</head>
+    <h2>Daftar Buku yang sedang di pinjam</h2>
+<body>
+    <table border=1>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            
+        </tr>
+         <% for (let i = 0 ; i < data.length ; i ++ ) {%>
+             <% for (let j = 0 ; j < data[i].Books.length ; j++) {%>
+            <tr>
+                <td><%= data[i].Books[j].book_name %></td>
+                <td><%= data[i].Books[j].author%></td>
+                <td><%= data[i].Books[j].genre%></td>
+
+            </tr>
+                      
+                  <%}%>
+            <%}%>   
+    </table>
+    <a href="/homepage">back home</a>
+<body>
+</html>
