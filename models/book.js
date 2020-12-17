@@ -2,66 +2,47 @@
 const {
   Model
 } = require('sequelize');
-
-const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Book extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsToMany(models.Book, {
+      Book.belongsToMany(models.User, {
         through : 'BookUser',
-        as : 'book',
+        as : 'user',
         foreignKey : 'Id'
       })
       // define association here
     }
   };
-  User.init({
-    username: {
+  Book.init({
+    book_name: {
       allowNull : false,
       type : DataTypes.STRING,
-      unique : true,
       validate : {
         notEmpty : true
       }
     },
-    password: {
+    author: {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-            notEmpty : true
+        notEmpty : true
       }
     },
-    email: {
-      allowNull : false,
-      type : DataTypes.STRING,
-      unique : true,
-      validate : {
-        isEmail : true
-      }     
-    },
-    phone_number: {
+    genre: {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-        not : ['[a-z]', 'i']
+        notEmpty : true
       }
     }
   }, {
-    hooks : {
-      beforeCreate : (user, options) => {
-        const saltRounds = 10
-        let salt = bcrypt.genSaltSync(saltRounds)
-        let hash = bcrypt.hashSync(user.password, salt)
-        user.password = hash
-      }
-    }, 
     sequelize,
-    modelName: 'User',
+    modelName: 'Book',
   });
-  return User;
+  return Book;
 };
