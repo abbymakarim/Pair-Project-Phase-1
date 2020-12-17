@@ -1,4 +1,4 @@
-const { Book } = require('../models');
+const { Book, BookUser } = require('../models');
 
 class BookController {
 
@@ -34,6 +34,22 @@ class BookController {
             }
             res.send(error)
         })
+    }
+    
+    static borrowBook (req, res) {
+         let data = {
+             user_id : +req.session.userId,
+             book_id : +req.params.id,
+             start_borow_time : new Date(),
+             end_date : new Date(),
+         }
+          BookUser.create(data)
+          .then(data => {
+              res.render('borrowedBook')
+          })
+          .catch(err => {
+              res.send(err)
+          })
     }
 
 } 

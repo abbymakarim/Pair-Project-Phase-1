@@ -9,10 +9,26 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references : {
+          model : {
+            tableName : "Users"
+          },
+          key : "id"
+        },
+        onUpdate : "CASCADE",
+        onDelete : "CASCADE"
       },
       book_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references : {
+          model : {
+            tableName : "Books"
+          },
+          key : "id"
+        },
+        onUpdate : "CASCADE",
+        onDelete : "CASCADE"
       },
       start_borow_time: {
         type: Sequelize.DATE
