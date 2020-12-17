@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as : 'book',
         foreignKey : 'Id'
       })
+      User.hasMany(models.BookUser)
       // define association here
     }
   };
@@ -46,10 +49,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-        not : ['[a-z]', 'i']
+        not : ['[a-z]', 'i'],
+        min : 8
       }
     }
   }, {
+    hooks : {
+      beforeCreate : (user, options) => {
+        const saltRounds = 10
+        let salt = bcrypt.genSaltSync(saltRounds)
+        let hash = bcrypt.hashSync(user.password, salt)
+        user.password = hash
+      }
+    }, 
     sequelize,
     modelName: 'User',
   });

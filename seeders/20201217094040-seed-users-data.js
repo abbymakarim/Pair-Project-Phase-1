@@ -5,7 +5,7 @@ const data = [
     username : "project1",
     password : "pairproject1",
     email : "pairproject1@email.com",
-    phone_number : "08123456789"
+    phone_number : "081234578910"
   }
 ]
 

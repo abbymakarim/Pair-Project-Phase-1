@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as : 'user',
         foreignKey : 'Id'
       })
+      Book.hasMany(models.BookUser)
       // define association here
     }
   };
@@ -23,21 +24,31 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-        notEmpty : true
+        notEmpty : {
+          args : true,
+          msg : "nama tidak boleh kosong"
+        }
+        
       }
     },
     author: {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-        notEmpty : true
+        notEmpty : {
+          args : true,
+          msg : 'author tidak boleh kosong'
+        }
       }
     },
     genre: {
       allowNull : false,
       type : DataTypes.STRING,
       validate : {
-        notEmpty : true
+        notEmpty : {
+          args : true,
+          msg : 'genre tidak boleh kosong'
+        }
       }
     }
   }, {
