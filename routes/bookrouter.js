@@ -8,5 +8,7 @@ router.get('/add', ControllerBook.addForm);
 router.post('/add', ControllerBook.addBook);
 router.get('/:id/borrow', ControllerBook.borrowBook);
 router.get('/borrow', ControllerBook.bookBorrowed);
+router.get('/:id/edit', ControllerBook.editForm);
+router.post('/:id/edit', ControllerBook.editBooks);
 
 module.exports = router

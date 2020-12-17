@@ -67,6 +67,34 @@ class BookController {
         })
     }
 
+    static editForm (req, res) {
+        let id = +req.params.id
+        Book.findByPk(id)
+        .then(data => {
+            res.render('editForm', {data})
+        })
+        .catch(err => {
+            res.send(err)
+        }) 
+    }
+    
+    static editBooks (req, res) {
+        let id = +req.params.id
+        console.log(req.body)
+        let data = {
+            book_name : req.body.title,
+            author : req.body.author,
+            genre : req.body.genre
+        }
+        Book.update(data, {where : {id : id}})
+        .then(data => {
+            res.redirect('/books')
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
 } 
 
 module.exports = BookController;
