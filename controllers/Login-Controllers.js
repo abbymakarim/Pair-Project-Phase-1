@@ -7,8 +7,6 @@ class Controller {
         if(req.query.error){
             errorMessage = req.query.error
         }
-
-
         res.render('loginPage.ejs', {
             errorMessage
         })
