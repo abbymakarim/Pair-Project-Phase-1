@@ -12,6 +12,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
+            <th>end date</th>
             
         </tr>
          <% for (let i = 0 ; i < data.length ; i ++ ) {%>
@@ -20,6 +21,7 @@
                 <td><%= data[i].Books[j].book_name %></td>
                 <td><%= data[i].Books[j].author%></td>
                 <td><%= data[i].Books[j].genre%></td>
+                <td><%= ConvertDate(new Date())  %></td>
 
             </tr>
                       

@@ -1,4 +1,5 @@
 const { Book, BookUser, User } = require('../models');
+const ConvertDate = require('../helper/date.js')
 
 class BookController {
 
@@ -59,7 +60,8 @@ class BookController {
             where : {id : id}
         })
         .then(data => {
-            res.render ('bookBorrowed', {data})
+
+            res.render ('bookBorrowed', {data : data, ConvertDate})
             
         })
         .catch(err => {
