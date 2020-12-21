@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,15 +12,53 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.belongsToMany(models.Book, {
+        through : models.BookUser,
+        foreignKey : "user_id"
+      })
     }
   };
   User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phone_number: DataTypes.INTEGER
+    username: {
+      allowNull : false,
+      type : DataTypes.STRING,
+      unique : true,
+      validate : {
+        notEmpty : true
+      }
+    },
+    password: {
+      allowNull : false,
+      type : DataTypes.STRING,
+      validate : {
+            notEmpty : true
+      }
+    },
+    email: {
+      allowNull : false,
+      type : DataTypes.STRING,
+      unique : true,
+      validate : {
+        isEmail : true
+      }     
+    },
+    phone_number: {
+      allowNull : false,
+      type : DataTypes.STRING,
+      validate : {
+        not : ['[a-z]', 'i'],
+        min : 8
+      }
+    }
   }, {
+    hooks : {
+      beforeCreate : (user, options) => {
+        const saltRounds = 10
+        let salt = bcrypt.genSaltSync(saltRounds)
+        let hash = bcrypt.hashSync(user.password, salt)
+        user.password = hash
+      }
+    }, 
     sequelize,
     modelName: 'User',
   });

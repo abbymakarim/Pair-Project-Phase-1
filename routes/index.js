@@ -1,14 +1,27 @@
 const router = require('express').Router()
 const Controller = require('../controllers/Home-Controllers')
+const bookrouter = require('./bookrouter.js')
 const homepage = require('./example-content')
 const register = require('./register')
 const login = require('./login')
+const { authentication, loggedin } = require('../middlewates/authentification')
 
 
-router.get('/', Controller.homepage)
-router.use('/register', register)
-router.use('/login', login)
-router.use('/homepage', homepage)
+
+
+//untuk umum
+router.get('/', Controller.homepage);
+
+
+//kalau udah login gabisa kesini
+router.use('/register', loggedin, register);
+router.use('/login', loggedin, login);
+
+
+//untuk yang sudah login
+router.use(authentication);
+router.use('/homepage', homepage);
+router.use('/books', bookrouter);
 
 
 
